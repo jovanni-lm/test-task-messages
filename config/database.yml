@@ -1,0 +1,5 @@
+development:
+  db_name: 'messages'
+  db_host: 'localhost'
+  db_username: 'root'
+  db_password: 47620828066

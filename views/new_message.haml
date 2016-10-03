@@ -1,0 +1,23 @@
+.row
+  .col-md-8.col-md-offset-2
+    %h2 Add new message
+    %form{ action: '/new_message' }
+      .form-group
+        %label{ for: 'body' } Message body:
+        %textarea.form-input{ type: 'text', name: 'body', class: 'form-control', rows: 5 }
+
+      .form-group
+        %label{ for: 'visits' } Destroy after:
+        .radio
+          %label
+            %input{ name: 'optradio', :type => "radio" }
+            link visits
+        .radio
+          %label
+            %input{ name: 'optradio', :type => "radio" }
+            number of hours
+
+      .form-group
+        %label{ for: 'visits' } Number of link visits:
+        %input.form-input{ type: 'text', name: 'visits', class: 'form-control bfh-number' }
+      %input{ type: 'submit', value: 'Save', class: 'button' }

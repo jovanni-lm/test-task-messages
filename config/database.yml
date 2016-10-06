@@ -1,5 +1,27 @@
+
+production:
+  adapter: postgresql
+  pool: 5
+  timeout: 5000
+  encoding: utf8
+  database: ''
+  username: ''
+  password: ''
+  host: ''
+  port: ''
+  min_messages: ERROR
+  reconnect: false
+
+test:
+  adapter: sqlite3
+  encoding: utf8
+  database: db/test.sqlite3
+  pool: 5
+  timeout: 5000
+
 development:
-  db_name: 'messages'
-  db_host: 'localhost'
-  db_username: 'root'
-  db_password: 47620828066
+  adapter: sqlite3
+  encoding: utf8
+  database: db/development.sqlite3
+  pool: 5
+  timeout: 5000

@@ -1,23 +1,56 @@
 .row
   .col-md-8.col-md-offset-2
     %h2 Add new message
-    %form{ action: '/new_message' }
+    %form{ action: '/message', method: 'post', id: 'new-message' }
       .form-group
-        %label{ for: 'body' } Message body:
-        %textarea.form-input{ type: 'text', name: 'body', class: 'form-control', rows: 5 }
+        %label{ for: 'msg-text', } Message body:
+        %textarea.form-input{ type: 'text',
+                              name: 'msg-text',
+                              class: 'form-control',
+                              rows: 5,
+                              required: true,
+                              id: 'msg-text' }
 
       .form-group
-        %label{ for: 'visits' } Destroy after:
+        %label{ for: 'destroy_option' } Destroy after:
         .radio
           %label
-            %input{ name: 'optradio', :type => "radio" }
+            %input{ name: 'message[destroy_option]',
+                    type: 'radio',
+                    value: 'visits',
+                    required: true }
             link visits
         .radio
           %label
-            %input{ name: 'optradio', :type => "radio" }
+            %input{ name: 'message[destroy_option]',
+                    type: 'radio',
+                    value: 'hours' }
             number of hours
 
       .form-group
-        %label{ for: 'visits' } Number of link visits:
-        %input.form-input{ type: 'text', name: 'visits', class: 'form-control bfh-number' }
+        %label{ for: 'message[countdown' } Countdown to destruction:
+        %input.form-input{ type: 'text',
+                           name: 'message[countdown]',
+                           class: 'form-control bfh-number',
+                           required: true }
+
+      .form-group
+        %label{ for: 'pass' } Password:
+        %input.form-input{ type: 'password',
+                           name: 'pass',
+                           class: 'form-control bfh-number',
+                           required: true,
+                           autocomplete: 'off',
+                           id: 'pass' }
+
+      %input{ name: 'message[body]', type: 'hidden', id: 'msg-body' }
+
+      %input{ name: 'message[password]',
+              type: 'hidden',
+              id: 'encrypted-password' }
+
       %input{ type: 'submit', value: 'Save', class: 'button' }
+
+%script(src='https://rawgit.com/ricmoo/aes-js/master/index.js')
+%script(src='/javascripts/md5/md5.min.js')
+%script(src='/javascripts/aes.js')

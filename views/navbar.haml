@@ -1,15 +1,15 @@
 .navbar.navbar-default
   .container-fluid
     .navbar-header
-      -#%a.btn.btn-navbar{ "data-toggle".to_sym => "collapse", "data-target".to_sym => ".nav-collapse"}
+    -#%a.btn.btn-navbar{ "data-toggle".to_sym => "collapse", "data-target".to_sym => ".nav-collapse"}
         %span.icon-bar
         %span.icon-bar
         %span.icon-bar
-      -#%a.brand{:href => '/'} Project name
+    -#%a.brand{:href => '/'} Project name
     .collapse.navbar-collapse
       %ul.nav.navbar-nav
         %li
-          %a{:href => '/new_message'}New message
+          %a{:href => '/message'}New message
         %li
           %a{:href => '/'}About
         %li

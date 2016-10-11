@@ -5,6 +5,7 @@ class CreateMessages < ActiveRecord::Migration
       t.string :destroy_option
       t.integer :countdown
       t.string :password
+      t.string :url_alias
       t.datetime :published_on, :required => true
     end
   end

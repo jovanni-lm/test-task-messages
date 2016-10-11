@@ -2,5 +2,9 @@
   %h1
     Bootstrap starter template
   %p
-    - @messages.each do |msg|
-      .msg= msg.password
+    - if @messages
+      %ul.links
+        - @messages.each do |msg|
+          %li
+            = msg.url_alias
+            %a{ href: "message/#{msg.url_alias}" }= msg.id

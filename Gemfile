@@ -2,7 +2,7 @@ gem 'sinatra'
 gem 'rake'
 gem 'activerecord'
 gem 'sinatra-activerecord'
-gem 'aes'
+gem 'whenever'
 
 group :development, :test do
   gem 'sqlite3'

@@ -2,6 +2,13 @@ require 'sinatra'
 require 'active_record'
 require 'yaml'
 require './models/message'
+require 'sinatra/flash'
+
+enable :sessions
+
+after '/message/:id' do
+  destroy_message_for_visits
+end
 
 after do
   ActiveRecord::Base.connection.close
@@ -22,12 +29,54 @@ get '/message' do
   haml(:new_message, cache: false)
 end
 
-post '/message' do
+get '/message/:id' do
+  get_message
+
+  if @message.id.present?
+    haml(:password, cache: false)
+  else
+    flash[:error] = "Message is not exists."
+    redirect '/'
+  end
+end
+
+post '/message/:id' do
+  get_message
+
+  @input_pass = Digest::MD5.new
+  @input_pass << params[:pass]
+
+  if @input_pass.to_s[0...16]== @message.password
+    @message.countdown -= 1
+    @message.save
+    haml(:show_message)
+  else
+    flash[:error] = "Wrong password."
+    redirect "message/#{@message.url_alias}"
+  end
+end
+
+post '/new-message' do
   @message = Message.new(params[:message])
+  @message.create_alias
 
   if @message.save
+    flash[:info] = "Message was successfully created."
     redirect '/'
   else
-    'Buuuuu'
+    flash[:error] = "Something went wrong..."
+    haml(:new_message)
+  end
+end
+
+def get_message
+  @message = Message.find_or_initialize_by(url_alias: params[:id])
+end
+
+def destroy_message_for_visits
+  get_message
+
+  if @message.id.present? && @message.destroy_option == 'visits' && @message.countdown <= 0
+    @message.destroy
   end
 end

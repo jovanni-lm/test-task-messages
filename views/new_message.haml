@@ -1,7 +1,7 @@
 .row
   .col-md-8.col-md-offset-2
     %h2 Add new message
-    %form{ action: '/message', method: 'post', id: 'new-message' }
+    %form{ action: '/new-message', method: 'post', id: 'new-message' }
       .form-group
         %label{ for: 'msg-text', } Message body:
         %textarea.form-input{ type: 'text',

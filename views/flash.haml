@@ -1,0 +1,3 @@
+- if flash
+  - flash.each do |name, msg|
+    .flash{ class: "alert alert-#{name}" }= msg

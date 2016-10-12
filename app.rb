@@ -35,7 +35,7 @@ get '/message/:id' do
   if @message.id.present?
     haml(:password, cache: false)
   else
-    flash[:error] = "Message is not exists."
+    flash[:danger] = "Message is not exists."
     redirect '/'
   end
 end
@@ -51,7 +51,7 @@ post '/message/:id' do
     @message.save
     haml(:show_message)
   else
-    flash[:error] = "Wrong password."
+    flash[:danger] = "Wrong password."
     redirect "message/#{@message.url_alias}"
   end
 end
@@ -61,11 +61,12 @@ post '/new-message' do
   @message.create_alias
 
   if @message.save
-    flash[:info] = "Message was successfully created."
+    # hotfix
+    flash[:info] = "Message was successfully created, <a href='message/#{@message.url_alias}'>see here</a>."
     redirect '/'
   else
-    flash[:error] = "Something went wrong..."
-    haml(:new_message)
+    flash[:danger] = @message.errors.full_messages.to_sentence
+    redirect '/message'
   end
 end
 

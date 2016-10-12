@@ -1,10 +1,6 @@
-.container
-  %h1
-    Bootstrap starter template
-  %p
-    - if @messages
-      %ul.links
-        - @messages.each do |msg|
-          %li
-            = msg.url_alias
-            %a{ href: "message/#{msg.url_alias}" }= msg.id
+.panel.panel-default
+  .panel-heading Messages:
+  - if @messages
+    .list-group
+      - @messages.each do |msg|
+        %a{ href: "message/#{msg.url_alias}", class: 'list-group-item' } #{msg.url_alias}

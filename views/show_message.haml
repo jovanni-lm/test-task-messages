@@ -1,7 +1,8 @@
 #message-body{ style: 'display: none;' }= @message.body
 #message-password{ style: 'display: none;' }= @message.password
-#show-msg
-#message-countdown Countdown to destroying: #{@message.countdown}
+.well
+  #show-msg
+  #message-countdown Countdown to destroying: #{@message.countdown}
 
 %script(src='https://rawgit.com/ricmoo/aes-js/master/index.js')
 %script(src='/javascripts/aes_decode.js')

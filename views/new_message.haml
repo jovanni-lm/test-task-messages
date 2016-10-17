@@ -14,7 +14,7 @@
                                   id: 'msg-text' }
 
           .form-group
-            %label{ for: 'destroy_option' } Destroy after:
+            %label{ for: 'message[destroy_option]' }Destroy after:
             .radio
               %label
                 %input{ name: 'message[destroy_option]',
@@ -35,7 +35,8 @@
                                name: 'message[countdown]',
                                class: 'form-control bfh-number',
                                required: true,
-                               min: 1 }
+                               min: 1,
+                               id: 'countdown' }
 
           .form-group
             %label{ for: 'pass' } Password:
@@ -52,7 +53,7 @@
                   type: 'hidden',
                   id: 'encrypted-password' }
 
-          %input{ type: 'submit', value: 'Save', class: 'button' }
+          %input{ type: 'submit', value: 'Save', class: 'btn btn-default' }
 
 %script(src='https://rawgit.com/ricmoo/aes-js/master/index.js')
 %script(src='/javascripts/md5/md5.min.js')

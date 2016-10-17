@@ -1,3 +1,4 @@
+require 'rubygems'
 require 'sinatra'
 require 'active_record'
 require 'yaml'
@@ -14,10 +15,10 @@ after do
   ActiveRecord::Base.connection.close
 end
 
-dbconfig = YAML.load(ERB.new(File.read("config/database.yml")).result)
+dbconfig = YAML.load(ERB.new(File.read('config/database.yml')).result)
 
 # YOU MUST SET THE ENV RACK_ENV to 'production' FOR YOUR CATRIDGE
-RACK_ENV ||= ENV["RACK_ENV"] || 'development'
+RACK_ENV ||= ENV['RACK_ENV'] || 'development'
 ActiveRecord::Base.establish_connection dbconfig[RACK_ENV]
 
 get '/' do
@@ -30,39 +31,41 @@ get '/message' do
 end
 
 get '/message/:id' do
-  get_message
+  load_message
 
   if @message.id.present?
     haml(:password, cache: false)
   else
-    flash[:danger] = "Message is not exists."
+    flash[:danger] = 'Message is not exists.'
     redirect '/'
   end
 end
 
 post '/message/:id' do
-  get_message
+  load_message
 
   @input_pass = Digest::MD5.new
   @input_pass << params[:pass]
 
-  if @input_pass.to_s[0...16]== @message.password
-    @message.countdown -= 1
-    @message.save
+  if @input_pass.to_s[0...16] == @message.password
+    if @message.destroy_option == 'visits'
+      @message.countdown -= 1
+      @message.save
+    end
     haml(:show_message)
   else
-    flash[:danger] = "Wrong password."
+    flash[:danger] = 'Wrong password.'
     redirect "message/#{@message.url_alias}"
   end
 end
 
 post '/new-message' do
   @message = Message.new(params[:message])
-  @message.create_alias
 
   if @message.save
     # hotfix
-    flash[:info] = "Message was successfully created, <a href='message/#{@message.url_alias}'>see here</a>."
+    flash[:info] = "Message was successfully created,
+ <a href='message/#{@message.url_alias}'>see here</a>."
     redirect '/'
   else
     flash[:danger] = @message.errors.full_messages.to_sentence
@@ -70,14 +73,15 @@ post '/new-message' do
   end
 end
 
-def get_message
+def load_message
   @message = Message.find_or_initialize_by(url_alias: params[:id])
 end
 
 def destroy_message_for_visits
-  get_message
+  load_message
 
-  if @message.id.present? && @message.destroy_option == 'visits' && @message.countdown <= 0
+  if @message.id.present? && @message.destroy_option == 'visits' &&
+      @message.countdown <= 0
     @message.destroy
   end
 end

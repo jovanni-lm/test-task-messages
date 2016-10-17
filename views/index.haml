@@ -1,6 +1,6 @@
-.panel.panel-default
-  .panel-heading Messages:
-  - if @messages
+- if @messages.any?
+  .panel.panel-default
+    .panel-heading Messages:
     .list-group
       - @messages.each do |msg|
         %a{ href: "message/#{msg.url_alias}", class: 'list-group-item' } #{msg.url_alias}

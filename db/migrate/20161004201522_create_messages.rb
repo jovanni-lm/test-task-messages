@@ -1,3 +1,4 @@
+
 class CreateMessages < ActiveRecord::Migration
   def self.up
     create_table :messages do |t|
@@ -6,7 +7,7 @@ class CreateMessages < ActiveRecord::Migration
       t.integer :countdown
       t.string :password
       t.string :url_alias
-      t.datetime :published_on, :required => true
+      t.integer :expiration_time
     end
   end
 
